@@ -1,9 +1,9 @@
-name: DAST Api Scan
+name: DAST Full Scan
 on: [push]
 
 jobs:
   soos_dast_baseline_analysis:
-    name: SOOS DAST API Analysis
+    name: SOOS DAST Full Analysis
     runs-on: ubuntu-latest
     steps:
       - name: Run SOOS DAST API Analysis
