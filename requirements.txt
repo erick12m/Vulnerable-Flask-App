@@ -1,2 +1,4 @@
 flask
 Gunicorn
+flasgger
+Flask_apispec

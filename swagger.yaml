@@ -1,0 +1,297 @@
+---
+definitions: {}
+info:
+  description: powered by Flasgger
+  termsOfService: "/tos"
+  title: A swagger API
+  version: 0.0.1
+paths:
+  "/":
+    get:
+      responses:
+        "200":
+          application/json: REST API
+          description: The main page of the REST API
+          examples:
+      summary: This is the main page of the REST API
+      tags:
+        - main_page
+  "/create_file":
+    get:
+      parameters:
+        - description: The filename
+          in: query
+          name: filename
+          required: true
+          type: string
+        - description: The text
+          in: query
+          name: text
+          required: true
+          type: string
+      responses:
+        "200":
+          application/json: File
+          description: The file
+          examples:
+      summary: This is the create file page of the REST API
+      tags:
+        - create_file
+  "/deserialization/":
+    get:
+      responses:
+        "200":
+          application/json: Data
+          description: The data
+          examples:
+      summary: This is the deserialization page of the REST API
+      tags:
+        - deserialization
+  "/factorial/{n}":
+    get:
+      parameters:
+        - description: The number
+          in: path
+          name: n
+          required: true
+          type: integer
+      responses:
+        "200":
+          application/json: Factorial
+          description: The factorial
+          examples:
+      summary: This is the factorial page of the REST API
+      tags:
+        - factorial
+  "/get_admin_mail/{control}":
+    get:
+      parameters:
+        - description: The control
+          in: path
+          name: control
+          required: true
+          type: string
+      responses:
+        "200":
+          application/json: Admin mail
+          description: The admin mail
+          examples:
+      summary: This is the get admin mail page of the REST API
+      tags:
+        - get_admin_mail
+  "/get_log/":
+    get:
+      responses:
+        "200":
+          application/json: Log
+          description: The log
+          examples:
+      summary: This is the get log page of the REST API
+      tags:
+        - get_log
+  "/get_users":
+    get:
+      parameters:
+        - description: The hostname
+          in: query
+          name: hostname
+          required: true
+          type: string
+      responses:
+        "200":
+          application/json: Users
+          description: The users
+          examples:
+      summary: This is the get users page of the REST API
+      tags:
+        - get_users
+  "/hello":
+    get:
+      parameters:
+        - description: The user name
+          in: query
+          name: name
+          required: true
+          type: string
+      responses:
+        "200":
+          application/json: Hello user name
+          description: The hello message
+          examples:
+      summary: This is the hello page of the REST API
+      tags:
+        - hello
+  "/login":
+    get:
+      parameters:
+        - description: The username
+          in: query
+          name: username
+          required: true
+          type: string
+        - description: The password
+          in: query
+          name: password
+          required: true
+          type: string
+      responses:
+        "200":
+          application/json: Login
+          description: The login
+          examples:
+      summary: This is the login page of the REST API
+      tags:
+        - login
+  "/logs":
+    get:
+      parameters:
+        - description: The data
+          in: query
+          name: data
+          required: true
+          type: string
+      responses:
+        "200":
+          application/json: Logs
+          description: The logs
+          examples:
+      summary: This is the logs page of the REST API
+      tags:
+        - logs
+  "/read_file":
+    get:
+      parameters:
+        - description: The filename
+          in: query
+          name: filename
+          required: true
+          type: string
+      responses:
+        "200":
+          application/json: File
+          description: The file
+          examples:
+      summary: This is the read file page of the REST API
+      tags:
+        - read_file
+  "/route":
+    get:
+      parameters:
+        - description: The route
+          in: query
+          name: route
+          required: true
+          type: string
+      responses:
+        "200":
+          application/json: Route
+          description: The route
+          examples:
+      summary: This is the route page of the REST API
+      tags:
+        - route
+  "/run_file":
+    get:
+      parameters:
+        - description: The filename
+          in: query
+          name: filename
+          required: true
+          type: string
+      responses:
+        "200":
+          application/json: File
+          description: The file
+          examples:
+      summary: This is the run file page of the REST API
+      tags:
+        - run_file
+  "/upload":
+    get:
+      responses:
+        "200":
+          application/json: Upload
+          description: The upload
+          examples:
+      summary: This is the upload page of the REST API
+      tags:
+        - upload
+    post:
+      responses:
+        "200":
+          application/json: Upload
+          description: The upload
+          examples:
+      summary: This is the upload page of the REST API
+      tags:
+        - upload
+  "/user/{name}":
+    get:
+      parameters:
+        - description: The user name
+          in: path
+          name: name
+          required: true
+          type: string
+      responses:
+        "200":
+          application/json: user name
+          description: The user name
+          examples:
+      summary: This is the search user page of the REST API
+      tags:
+        - user
+  "/user_pass_control":
+    get:
+      parameters:
+        - description: The username
+          in: query
+          name: username
+          required: true
+          type: string
+        - description: The password
+          in: query
+          name: password
+          required: true
+          type: string
+      responses:
+        "200":
+          application/json: User pass control
+          description: The user pass control
+          examples:
+      summary: This is the user pass control page of the REST API
+      tags:
+        - user_pass_control
+  "/welcome/{name}":
+    get:
+      parameters:
+        - description: The user name
+          in: path
+          name: name
+          required: true
+          type: string
+      responses:
+        "200":
+          application/json: Welcome user name
+          description: The welcome message
+          examples:
+      summary: This is the welcome page of the REST API
+      tags:
+        - welcome
+  "/welcome2/{name}":
+    get:
+      parameters:
+        - description: The user name
+          in: path
+          name: name
+          required: true
+          type: string
+      responses:
+        "200":
+          application/json: Welcome user name
+          description: The welcome message
+          examples:
+      summary: This is the welcome page of the REST API
+      tags:
+        - welcome2
+swagger: "2.0"

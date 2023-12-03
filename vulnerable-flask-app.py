@@ -3,18 +3,63 @@ import subprocess
 from werkzeug.datastructures import Headers
 from werkzeug.utils import secure_filename
 import sqlite3
+from flasgger import Swagger
+from flask_apispec import FlaskApiSpec
 
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER']="/home/kali/Desktop/upload"
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
+app.config.update({
+    'APISPEC_SPEC': app.config.get('APISPEC_SPEC', {}),
+    'APISPEC_SWAGGER_URL': '/swagger/',
+})
+swagger = Swagger(app)
+app.config.update({
+    'APISPEC_SWAGGER_UI_URL': app.config.get('APISPEC_SWAGGER_URL') + 'ui/',
+})
+docs = FlaskApiSpec(app)
+
+
 
 @app.route("/")
 def main_page():
+    # swagger api documentation
+    """
+    This is the main page of the REST API
+    ---
+    tags:
+      - main_page
+    responses:
+        200:
+            description: The main page of the REST API
+            examples:
+            application/json: "REST API"
+        """
+        
     return "REST API"
 
 @app.route("/user/<string:name>")
 def search_user(name):
+    # swagger api documentation
+    """
+    This is the search user page of the REST API
+    ---
+    tags:
+        - user
+    parameters:
+        - name: name
+          in: path
+          type: string
+          required: true
+          description: The user name
+    responses:
+        200:
+            description: The user name
+            examples:
+            application/json: "user name"
+        """
+    
     con = sqlite3.connect("test.db")
     cur = con.cursor()
     cur.execute("select * from test where username = '%s'" % name)
@@ -28,16 +73,73 @@ def search_user(name):
 
 @app.route("/welcome/<string:name>")
 def welcome(name):
+    # swagger api documentation
+    """
+    This is the welcome page of the REST API
+    ---
+    tags:
+        - welcome
+    parameters:
+        - name: name
+          in: path
+          type: string
+          required: true
+          description: The user name
+    responses:
+        200:
+            description: The welcome message
+            examples:
+            application/json: "Welcome user name"
+        """
+    
     data="Welcome "+name
     return jsonify(data=data),200
 
 @app.route("/welcome2/<string:name>")
 def welcome2(name):
+    # swagger api documentation
+    """
+    This is the welcome page of the REST API
+    ---
+    tags:
+        - welcome2
+    parameters:
+        - name: name
+          in: path
+          type: string
+          required: true
+          description: The user name
+    responses:
+        200:
+            description: The welcome message
+            examples:
+            application/json: "Welcome user name"
+        """
+    
     data="Welcome "+name
     return data
 
 @app.route("/hello")
 def hello_ssti():
+    # swagger api documentation
+    """
+    This is the hello page of the REST API
+    ---
+    tags:
+        - hello
+    parameters:
+        - name: name
+          in: query
+          type: string
+          required: true
+          description: The user name
+    responses:
+        200:
+            description: The hello message
+            examples:
+            application/json: "Hello user name"
+        """
+    
     if request.args.get('name'):
         name = request.args.get('name')
         template = f'''<div>
@@ -52,6 +154,26 @@ def hello_ssti():
 
 @app.route("/get_users")
 def get_users():
+    # swagger api documentation
+    """
+    This is the get users page of the REST API
+    ---
+    tags:
+        - get_users
+    parameters:
+        - name: hostname
+          in: query
+          type: string
+          required: true
+          description: The hostname
+    responses:
+        200:
+            description: The users
+            examples:
+            application/json: "Users"
+        """
+        
+    
     try:
         hostname = request.args.get('hostname')
         command = "dig " + hostname
@@ -63,6 +185,19 @@ def get_users():
 
 @app.route("/get_log/")
 def get_log():
+    # swagger api documentation
+    """
+    This is the get log page of the REST API
+    ---
+    tags:
+        - get_log
+    responses:
+        200:
+            description: The log
+            examples:
+            application/json: "Log"
+        """
+    
     try:
         command="cat restapi.log"
         data=subprocess.check_output(command,shell=True)
@@ -73,6 +208,25 @@ def get_log():
 
 @app.route("/read_file")
 def read_file():
+    # swagger api documentation
+    """
+    This is the read file page of the REST API
+    ---
+    tags:
+        - read_file
+    parameters:
+        - name: filename
+          in: query
+          type: string
+          required: true
+          description: The filename
+    responses:
+        200:
+            description: The file
+            examples:
+            application/json: "File"
+        """
+    
     filename = request.args.get('filename')
     file = open(filename, "r")
     data = file.read()
@@ -84,6 +238,19 @@ def read_file():
 
 @app.route("/deserialization/")
 def deserialization():
+    # swagger api documentation
+    """
+    This is the deserialization page of the REST API
+    ---
+    tags:
+        - deserialization
+    responses:
+        200:
+            description: The data
+            examples:
+            application/json: "Data"
+        """
+    
     try:
         import socket, pickle
         HOST = "0.0.0.0"
@@ -102,6 +269,26 @@ def deserialization():
 
 @app.route("/get_admin_mail/<string:control>")
 def get_admin_mail(control):
+    # swagger api documentation
+    """
+    This is the get admin mail page of the REST API
+    ---
+    tags:
+        - get_admin_mail
+    parameters:
+        - name: control
+          in: path
+          type: string
+          required: true
+          description: The control
+    responses:
+        200:
+            description: The admin mail
+            examples:
+            application/json: "Admin mail"
+        """
+        
+    
     if control=="admin":
         data="admin@cybersecurity.intra"
         import logging
@@ -113,6 +300,25 @@ def get_admin_mail(control):
 
 @app.route("/run_file")
 def run_file():
+    # swagger api documentation
+    """
+    This is the run file page of the REST API
+    ---
+    tags:
+        - run_file
+    parameters:
+        - name: filename
+          in: query
+          type: string
+          required: true
+          description: The filename
+    responses:
+        200:
+            description: The file
+            examples:
+            application/json: "File"
+        """
+        
     try:
         filename=request.args.get("filename")
         command="/bin/bash "+filename
@@ -123,6 +329,30 @@ def run_file():
 
 @app.route("/create_file")
 def create_file():
+    # swagger api documentation
+    """
+    This is the create file page of the REST API
+    ---
+    tags:
+        - create_file
+    parameters:
+        - name: filename
+          in: query
+          type: string
+          required: true
+          description: The filename
+        - name: text
+          in: query
+          type: string
+          required: true
+          description: The text
+    responses:
+        200:
+            description: The file
+            examples:
+            application/json: "File"
+        """
+    
     try:
         filename=request.args.get("filename")
         text=request.args.get("text")
@@ -146,6 +376,26 @@ def factorial(number):
 
 @app.route('/factorial/<int:n>')
 def factroial(n:int):
+    # swagger api documentation
+    """
+    This is the factorial page of the REST API
+    ---
+    tags:
+        - factorial
+    parameters:
+        - name: n
+          in: path
+          type: integer
+          required: true
+          description: The number
+    responses:
+        200:
+            description: The factorial
+            examples:
+            application/json: "Factorial"
+        """
+        
+    
     if request.remote_addr in connection:
         if connection[request.remote_addr] > 2:
             return jsonify(data="Too many req."), 403
@@ -162,6 +412,31 @@ def factroial(n:int):
 
 @app.route('/login',methods=["GET"])
 def login():
+    # swagger api documentation
+    """
+    This is the login page of the REST API
+    ---
+    tags:
+        - login
+    parameters:
+        - name: username
+          in: query
+          type: string
+          required: true
+          description: The username
+        - name: password
+          in: query
+          type: string
+          required: true
+          description: The password
+    responses:
+        200:
+            description: The login
+            examples:
+            application/json: "Login"
+        """
+        
+    
     username=request.args.get("username")
     passwd=request.args.get("password")
     if "anil" in username and "cyber" in passwd:
@@ -171,6 +446,25 @@ def login():
 
 @app.route('/route')
 def route():
+    # swagger api documentation
+    """
+    This is the route page of the REST API
+    ---
+    tags:
+        - route
+    parameters:
+        - name: route
+          in: query
+          type: string
+          required: true
+          description: The route
+    responses:
+        200:
+            description: The route
+            examples:
+            application/json: "Route"
+        """
+    
     content_type = request.args.get("Content-Type")
     response = Response()
     headers = Headers()
@@ -180,6 +474,25 @@ def route():
 
 @app.route('/logs')
 def ImproperOutputNeutralizationforLogs():
+    # swagger api documentation
+    """
+    This is the logs page of the REST API
+    ---
+    tags:
+        - logs
+    parameters:
+        - name: data
+          in: query
+          type: string
+          required: true
+          description: The data
+    responses:
+        200:
+            description: The logs
+            examples:
+            application/json: "Logs"
+        """
+    
     data = request.args.get('data')
     import logging
     logging.basicConfig(filename="restapi.log", filemode='w', level=logging.DEBUG)
@@ -189,6 +502,30 @@ def ImproperOutputNeutralizationforLogs():
 
 @app.route("/user_pass_control")
 def user_pass_control():
+    # swagger api documentation
+    """
+    This is the user pass control page of the REST API
+    ---
+    tags:
+        - user_pass_control
+    parameters:
+        - name: username
+          in: query
+          type: string
+          required: true
+          description: The username
+        - name: password
+          in: query
+          type: string
+          required: true
+          description: The password
+    responses:
+        200:
+            description: The user pass control
+            examples:
+            application/json: "User pass control"
+        """
+    
     import re
     username=request.form.get("username")
     password=request.form.get("password")
@@ -202,13 +539,26 @@ def user_pass_control():
 
 @app.route('/upload', methods = ['GET','POST'])
 def uploadfile():
-   import os
-   if request.method == 'POST':
+    # swagger api documentation
+    """
+    This is the upload page of the REST API
+    ---
+    tags:
+        - upload
+    responses:
+        200:
+            description: The upload
+            examples:
+            application/json: "Upload"
+        """
+    import os
+    
+    if request.method == 'POST':
       f = request.files['file']
       filename=secure_filename(f.filename)
       f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
       return 'File uploaded successfully'
-   else:
+    else:
       return '''
 <html>
    <body>
@@ -221,8 +571,6 @@ def uploadfile():
 
 
       '''
-
-
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=8081)
