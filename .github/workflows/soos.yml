@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Copy swagger.yaml to /zap/wrk/
-        run: cp swagger.yaml /zap/wrk/swagger.yaml
+        run: ls
       - name: Run SOOS DAST API Analysis
         uses: soos-io/soos-dast-github-action@v2 # GET Latest Version from https://github.com/marketplace/actions/soos-dast
         with:
