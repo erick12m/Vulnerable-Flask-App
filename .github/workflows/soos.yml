@@ -15,3 +15,4 @@ jobs:
           scan_mode: "apiscan"
           api_scan_format: "openapi"
           target_url: "https://vulnerable-flask-app.onrender.com/"
+          context_file: "swagger.yaml"
