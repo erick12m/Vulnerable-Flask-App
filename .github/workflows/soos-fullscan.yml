@@ -13,5 +13,5 @@ jobs:
           api_key: ${{ secrets.SOOS_API_KEY }}
           project_name: "erick12m/Vulnerable-Flask-App"
           scan_mode: "fullscan"
-          target_url: "https://vulnerable-flask-app.onrender.com/"
+          target_url: "https://vulnerable-flask-app.onrender.com/apispec_1.json"
           on_failure: "fail_the_build"
