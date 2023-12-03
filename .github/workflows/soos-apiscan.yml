@@ -6,8 +6,6 @@ jobs:
     name: SOOS DAST API Analysis
     runs-on: ubuntu-latest
     steps:
-      - name: Copy swagger.yaml to /zap/wrk/
-        run: ls
       - name: Run SOOS DAST API Analysis
         uses: soos-io/soos-dast-github-action@v2 # GET Latest Version from https://github.com/marketplace/actions/soos-dast
         with:
@@ -17,3 +15,4 @@ jobs:
           scan_mode: "apiscan"
           api_scan_format: "openapi"
           target_url: "https://vulnerable-flask-app.onrender.com/apispec_1.json"
+          on_failure: "fail_the_build"
