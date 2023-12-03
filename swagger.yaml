@@ -1,4 +1,6 @@
 ---
+servers:
+  - url: https://vulnerable-flask-app.onrender.com
 definitions: {}
 info:
   description: powered by Flasgger
