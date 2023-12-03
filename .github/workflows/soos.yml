@@ -16,4 +16,4 @@ jobs:
           project_name: "erick12m/Vulnerable-Flask-App"
           scan_mode: "apiscan"
           api_scan_format: "openapi"
-          target_url: "swagger.yaml"
+          target_url: "https://vulnerable-flask-app.onrender.com/apispec_1.json"
